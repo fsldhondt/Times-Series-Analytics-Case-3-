@@ -595,8 +595,8 @@ skewness(as.numeric(volatility$NVDA))
 kurtosis(as.numeric(volatility$NVDA))
 
 par(mfrow = c(1, 2))
-hist(rr_all$NVDA, breaks = 100, main = "NVDA Realized Range")
-hist(volatility$NVDA, breaks = 100, main = "NVDA Log Realized Range")
+hist(rr_all$NVDA, breaks = 100, main = "NVDA Realized Range", xlab = "Realized range", ylab = "Frequency")
+hist(volatility$NVDA, breaks = 100, main = "NVDA Log Realized Range", xlab = "Log realized range", ylab = "Frequency")
 par(mfrow = c(1,1))
 
 # ---- Exploring the volatility series ----
