@@ -767,18 +767,22 @@ robust_df <- data.frame(date   = index(roll_all),
                         min    = apply(roll_2to6, 1, min),
                         median = apply(roll_2to6, 1, median),
                         max    = apply(roll_2to6, 1, max),
+                        lag5   = as.numeric(roll_all$lag5),
                         lag10  = as.numeric(roll_all$lag10),
                         lag21  = as.numeric(roll_all$lag21))
 
-# Plot: grey band = lags 2-6, blue = median, red = lag 10 (HQ), orange = lag 21 (AIC)
+# Plot: grey band = lags 2-6, dashed balck = median, blue = lag 5 (BIC), red = lag 10 (HQ), orange = lag 21 (AIC)
 ggplot(robust_df, aes(x = date)) +
   geom_ribbon(aes(ymin = min, ymax = max), fill = "grey75") +
-  geom_line(aes(y = median, color = "Median (lags 2-6)"), linewidth = 0.5) +
   geom_line(aes(y = lag10,  color = "Lag 10 (HQ)"),  linewidth = 0.4, alpha = 0.6) +
   geom_line(aes(y = lag21,  color = "Lag 21 (AIC)"), linewidth = 0.4, alpha = 0.6) +
-  scale_color_manual(values = c("Median (lags 2-6)" = "#205493",
+  geom_line(aes(y = lag5,   color = "Lag 5 (BIC)"),  linewidth = 0.6) +
+  geom_line(aes(y = median, color = "Median (lags 2-6)"), linewidth = 0.4, linetype = "dashed") +
+  scale_color_manual(values = c("Lag 5 (BIC)" = "#205493",
+                                "Median (lags 2-6)" = "black",
                                 "Lag 10 (HQ)"       = "indianred",
                                 "Lag 21 (AIC)"      = "darkorange"),
+                     breaks = c("Lag 5 (BIC)", "Median (lags 2-6)", "Lag 10 (HQ)", "Lag 21(AIC)"),
                      name = NULL) +
   labs(title = "Total Spillover Index: Robustness to VAR Lag Order",
        subtitle = "Grey band = min-max across lags 2-6",
